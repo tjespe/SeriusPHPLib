@@ -2,7 +2,7 @@
 include_once __DIR__."/../runtime/set-settings.php";
 
 function loadModules(...$modules) {
-  $libURL = DEVMODE ? __DIR__."/../../../../../UsefulModules" : "https://raw.githubusercontent.com/tjespe/UsefulModules/master";
+  $libURL = DEVMODE ? __DIR__."/../../../../../SeriusJSLib" : "https://raw.githubusercontent.com/tjespe/SeriusJSLib/master";
   $css = "";
   $code = "window.dependencies = ".json_encode($modules).";\n";
   foreach ($modules as $module) {
