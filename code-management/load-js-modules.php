@@ -12,7 +12,7 @@ function loadModules(...$modules) {
       $tmphandle = tmpfile();
       $tmpfname = stream_get_meta_data($tmphandle)["uri"];
       fwrite($tmphandle, file_get_contents("$libURL/css/$module.css"));
-      $css .= str_replace("`", "\`", shell_exec("java -jar ".__DIR__."/../third-party/closure-stylesheets.jar $tmpfname"));
+      $css .= str_replace("`", "\`", shell_exec("java -jar ".__DIR__."/../third-party/closure-stylesheets.jar \"$tmpfname\""));
       fclose($tmphandle);
     }
   }
