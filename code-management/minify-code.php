@@ -5,7 +5,7 @@ include_once __DIR__.'/save.php';
 
 if (!defined('STDERR')) define('STDERR', fopen('php://stderr', 'w'));
 
-function minifyCode ($command, $id = "", $code = "") {
+function minify_code ($command, $id = "", $code = "") {
   $descriptorspec = [
     0 => ["pipe", "r"],
     1 => ["pipe", "w"]

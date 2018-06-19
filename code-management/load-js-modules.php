@@ -15,7 +15,7 @@ function load_js_modules($modules) {
     $tmphandle = tmpfile();
     $tmpfname = stream_get_meta_data($tmphandle)["uri"];
     fwrite($tmphandle, $css);
-    $css = minifyCode(CSS_COMPILER("'$tmpfname'"));
+    $css = minify_code(CSS_COMPILER("'$tmpfname'"));
     fclose($tmphandle);
   }
   $code .= "document.querySelector('style').innerText += `$css`;";
