@@ -3,6 +3,8 @@
 include_once __DIR__.'/../../library.php';
 include_once __DIR__.'/save.php';
 
+if (!defined('STDERR')) define('STDERR', fopen('php://stderr', 'w'));
+
 function minifyCode ($command, $id = "", $code = "") {
   $descriptorspec = [
     0 => ["pipe", "r"],
@@ -18,9 +20,8 @@ function minifyCode ($command, $id = "", $code = "") {
     $compiled = stream_get_contents($pipes[1]);
     fclose($pipes[1]);
 
-    if (strlen($id)) save_code(connect(), $compiled, $id);
-    if (!defined('STDERR')) define('STDERR', fopen('php://stderr', 'w'));
-    fwrite(STDERR, "Successfully compiled ".(strlen($id) ? "and saved $id " : "")."code.\n");
+    if (strlen($id)) $result = save_code(connect(), $compiled, $id);
+    fwrite(STDERR, "Successfully compiled ".(strlen($id) ? "$id. Result of saving: ".json_encode($result) : "code.")."\n");
     return $compiled;
   }
 }
