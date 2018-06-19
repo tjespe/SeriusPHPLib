@@ -5,7 +5,7 @@ include_once __DIR__.'/save.php';
 
 if (!defined('STDERR')) define('STDERR', fopen('php://stderr', 'w'));
 
-function minify_code ($command, $id = "", $code = "") {
+function minify_code ($command, $id = "", $code = "", $version = VERSION) {
   $descriptorspec = [
     0 => ["pipe", "r"],
     1 => ["pipe", "w"]
@@ -20,7 +20,7 @@ function minify_code ($command, $id = "", $code = "") {
     $compiled = stream_get_contents($pipes[1]);
     fclose($pipes[1]);
 
-    if (strlen($id)) $result = save_code(connect(), $compiled, $id);
+    if (strlen($id)) $result = save_code(connect(), $compiled, $id, $version);
     fwrite(STDERR, "Successfully compiled ".(strlen($id) ? "$id. Result of saving: ".json_encode($result) : "code.")."\n");
     return $compiled;
   }

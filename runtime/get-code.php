@@ -18,7 +18,7 @@ function get_code($con, $basedir, $files, $version = VERSION, $minifier = "cat",
     if ($code = get_code_from_db($con, $id, $version)) return $code["content"];
     else {
       include_once __DIR__.'/../code-management/minify-code.php';
-      return minify_code($minifier, $id, $use_stdin ? get_code_from_file_system($files, $js_modules) : "");
+      return minify_code($minifier, $id, $use_stdin ? get_code_from_file_system($files, $js_modules) : "", $version);
     }
   }
 }
