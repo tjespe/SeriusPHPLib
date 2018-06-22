@@ -3,8 +3,6 @@
 include_once __DIR__.'/../../library.php';
 include_once __DIR__.'/save.php';
 
-if (!defined('STDERR')) define('STDERR', fopen('php://stderr', 'w'));
-
 function minify_code ($command, $id = "", $code = "", $version = VERSION) {
   $descriptorspec = [
     0 => ["pipe", "r"],
