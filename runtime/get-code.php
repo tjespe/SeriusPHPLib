@@ -23,7 +23,13 @@ function get_code($con, $basedir, $files, $version = VERSION, $minifier = "cat",
   }
 }
 define("JS_COMPILER", "java -jar '".__DIR__."/../third-party/closure-compiler.jar' --jscomp_off=misplacedTypeAnnotation");
-define("HTML_COMPILER", "if command -v html-minifier > /dev/null; then; html-minifier; else; echo \"Please install html-minifier by typing 'sudo npm i -g html-minifier' on the command line in order to serve HTML minified\" > /dev/stderr && cat; fi");
+define("HTML_COMPILER", "if command -v html-minifier > /dev/null
+  then
+    html-minifier
+  else
+    echo \"Please install html-minifier by typing 'sudo npm i -g html-minifier' on the command line in order to serve HTML minified\" > /dev/stderr
+    cat
+  fi");
 function CSS_COMPILER ($args) {
   return "java -jar '".__DIR__."/../third-party/closure-stylesheets.jar' $args --allow-unrecognized-properties";
 }
