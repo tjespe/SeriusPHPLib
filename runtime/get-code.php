@@ -27,7 +27,7 @@ define("HTML_COMPILER", "if command -v html-minifier > /dev/null
   then
     html-minifier
   else
-    echo \"Please install html-minifier by typing 'sudo npm i -g html-minifier' on the command line in order to serve HTML minified\" > /dev/stderr
+    echo \"Please install html-minifier by typing 'sudo npm i -g html-minifier' on the command line in order to serve HTML minified\" 1>&2
     cat
   fi");
 function CSS_COMPILER ($args) {
