@@ -23,11 +23,11 @@ function get_code($con, $basedir, $files, $version = VERSION, $minifier = "cat",
   }
 }
 define("JS_COMPILER", "java -jar '".__DIR__."/../third-party/closure-compiler.jar' --jscomp_off=misplacedTypeAnnotation");
-define("HTML_COMPILER", "if command -v html-minifier > /dev/null
+define("HTML_COMPILER", "if command -v html-minifier > /dev/null && command -v node > /dev/null
   then
     html-minifier --collapse-whitespace
   else
-    echo \"Please install html-minifier by typing 'sudo npm i -g html-minifier' on the command line and make sure both html-minifier and node is available in PHP's path (\$PATH) in order to serve HTML minified\" 1>&2
+    echo \"Please use npm to install html-minifier by typing 'sudo npm i -g html-minifier' on the command line and make sure both html-minifier and node is available in PHP's path (\$PATH) in order to serve HTML minified\" 1>&2
     cat
   fi");
 function CSS_COMPILER ($args) {
