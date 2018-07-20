@@ -1,5 +1,8 @@
 <?php
 
+include_once __DIR__.'/../runtime/mysqlim.php';
+include_once __DIR__.'/../runtime/set-settings.php';
+
 function save_code($con, $content, $id, $version = VERSION) {
 	if (!defined('ATTEMPTED_TO_DELETE_OUTDATE_CODE_FROM_DB')) delete_outdated_code($con);
 	$stmt = prepare($con, "save_code", "INSERT INTO codecache (id, version, content) VALUES (?, ?, ?)");
