@@ -1,5 +1,7 @@
 <?php
 
+include_once __DIR__.'/set-settings.php';
+
 function get_code_from_db($con, $id, $version = VERSION) {
 	$stmt = $con->prepare("SELECT content FROM codecache WHERE id = ? AND version = ?");
 	if (!$stmt) return false;

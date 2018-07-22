@@ -1,5 +1,8 @@
 <?php
 
+include_once __DIR__.'/mysqlim.php';
+include_once __DIR__.'/set-settings.php';
+
 /*********************
 ****** Getters *******
 *********************/

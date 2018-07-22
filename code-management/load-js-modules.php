@@ -1,4 +1,5 @@
 <?php
+
 include_once __DIR__."/../runtime/set-settings.php";
 include_once __DIR__."/minify-code.php";
 
