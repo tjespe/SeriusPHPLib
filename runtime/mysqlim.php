@@ -33,7 +33,8 @@ function get_row_info($con, $table, $id, ...$columns) {
 	for ($i=1; $i < count(func_get_args()); $i++) { 
 		if (preg_match('/[^A-Za-z0-9_*]/', func_get_args()[$i])) return "Only letters, numbers and '_' are allowed";
 	}
-	$stmt = prepare($con, "get_".implode("_", $columns)."_by_id", "SELECT ".implode(", ", $columns)." FROM $table WHERE id = ?");
+	$stmt = prepare($con, "get_".implode("_", $columns)."_by_id_from_$table", "SELECT ".implode(", ", $columns)." FROM $table WHERE id = ?");
+	if (!$stmt) fwrite(STDERR, $con->error."\n");
 	$stmt->bind_param("i", $id);
 	$stmt->execute();
 	return $stmt->get_result()->fetch_assoc();
@@ -48,6 +49,14 @@ function get_id_from_name($con, $table, $name) {
 	$stmt->bind_param("s", $name);
 	$stmt->execute();
 	return $stmt->get_result()->fetch_assoc()["id"];
+}
+
+function get_name_from_id($con, $table, $id) {
+	if (preg_match('/[^A-Za-z0-9_*]/', $table)) return "Only letters, numbers and '_' are allowed, not ".$table;
+	$stmt = prepare($con, "get_name_$table", "SELECT name FROM $table WHERE id = ?");
+	$stmt->bind_param("i", $id);
+	$stmt->execute();
+	return $stmt->get_result()->fetch_assoc()["name"];
 }
 
 /**
