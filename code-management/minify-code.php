@@ -1,6 +1,7 @@
 <?php
 
-include_once __DIR__.'/../../library.php';
+include_once __DIR__.'/../runtime/mysqlim.php';
+include_once __DIR__.'/../runtime/set-settings.php';
 include_once __DIR__.'/save.php';
 
 function minify_code ($command, $id = "", $code = "", $version = VERSION) {
