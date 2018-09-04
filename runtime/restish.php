@@ -48,7 +48,7 @@ function require_params($params) {
 function reject_input($message = "Missing parameters") {
 	http_response_code(400);
 	die(json_encode([
-		"error" => $message,
+		"message" => $message,
 		"success" => false
 	]));
 }
