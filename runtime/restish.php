@@ -22,10 +22,10 @@ function print_result($result, $extra_info = []) {
  * @param  object $data The input object
  */
 function print_data($data) {
-	$json = json_encode($data, JSON_UNESCAPED_UNICODE);
+	$json = json_encode($data, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
 	$hash = crc32($json);
 	header("Content-Hash: $hash");
-	if ($_SERVER['HTTP_CONTENT_HASH'] != $hash) echo $json;
+	if (!isset($_SERVER['HTTP_CONTENT_HASH']) || $_SERVER['HTTP_CONTENT_HASH'] != $hash) echo $json;
 	else http_response_code(204);
 }
 
