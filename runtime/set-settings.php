@@ -4,6 +4,7 @@ define('GIT_HASH_FILE', __DIR__."/../../../../.git/refs/heads/master");
 define('VERSION', substr(file_exists(GIT_HASH_FILE) ? file_get_contents(GIT_HASH_FILE) : shell_exec("which git") ? shell_exec("git rev-parse --short HEAD") : die("Git needs to be installed on the server"), 0, 3));
 define('DEVMODE', isset($_GET["dev"]));
 define('URL_APPENDAGE', DEVMODE ? round(microtime(true) * 1000) : VERSION);
+define('OMDB_KEY', __DIR__."/../../omdb-api-key.txt");
 if (!defined('STDERR')) define('STDERR', fopen('php://stderr', 'w'));
 session_start();
 
