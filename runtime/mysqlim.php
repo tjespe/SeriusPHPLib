@@ -66,7 +66,8 @@ function prepare ($con, $name, $stmt, $die = true) {
 	if (!property_exists($con, $name)) $con->{$name} = $con->prepare($stmt);
 	if (!$con->{$name}) {
 		if (!$die) return false;
-		else die("Error when preparing $name: ".$con->error);
+		else if (DEVMODE) print_result([500, "Error when preparing $name: ".$con->error]);
+		else print_result([500, "An error occured"]);
 	}
 	return $con->{$name};
 }
