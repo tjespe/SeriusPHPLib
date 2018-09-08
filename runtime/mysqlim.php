@@ -66,8 +66,18 @@ function prepare ($con, $name, $stmt, $die = true) {
 	if (!property_exists($con, $name)) $con->{$name} = $con->prepare($stmt);
 	if (!$con->{$name}) {
 		if (!$die) return false;
-		else if (DEVMODE) print_result([500, "Error when preparing $name: ".$con->error]);
-		else print_result([500, "An error occured"]);
+		else if (DEVMODE) print_result([500, "Error when preparing $name: <pre>".$con->error."</pre>"]);
+		else {
+			mail("tordjohanespe@gmail.com", "Error on domain $_SERVER[HTTP_HOST]", "<pre>
+				Error when preparing statement with id $name
+
+				<b>Request url</b>: <i>$_SERVER[REQUEST_URI]</i>
+				<b>Query text</b>: <i>$stmt</i>
+				<b>Error message</b>: <i>".$con->error."</i>
+
+			</pre>", "Content-type:text/html;charset=UTF-8\r\n");
+			print_result([500, "An unknown error occured on the server. There is nothing you can do about it, but the incident has been reported and will be fixed as soon as possible."]);
+		}
 	}
 	return $con->{$name};
 }
