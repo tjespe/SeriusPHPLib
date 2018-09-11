@@ -44,8 +44,14 @@ function get_code_from_file_system($files, $js_modules = []) {
   }
   foreach ($files as $pattern) {
     foreach (glob($pattern) as $file) {
-      $code .= file_get_contents($file);
+      $code .= includeToVar($file);
     }
   }
   return $code;
+}
+
+function includeToVar($filename) {
+  ob_start();
+  include_once $filename;
+  return ob_get_clean();
 }
