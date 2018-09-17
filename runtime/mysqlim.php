@@ -31,7 +31,7 @@ function connect($username = "public", $password = "", $die = true) {
  */
 function get_row_info($con, $table, $id, ...$columns) {
 	for ($i=1; $i < count(func_get_args()); $i++) { 
-		if (validate_name(func_get_args()[$i])) return "Only letters, numbers and '_' are allowed";
+		if (!validate_name(func_get_args()[$i])) return "Only letters, numbers and '_' are allowed";
 	}
 	$stmt = prepare($con, "get_".implode("_", $columns)."_by_id_from_$table", "SELECT ".implode(", ", $columns)." FROM $table WHERE id = ?");
 	if (!$stmt) fwrite(STDERR, $con->error."\n");
@@ -44,7 +44,7 @@ function get_row_info($con, $table, $id, ...$columns) {
  * @return int       ID of row with name $name in table $table
  */
 function get_id_from_name($con, $table, $name) {
-	if (validate_name($table)) return "Only letters, numbers and '_' are allowed, not ".$table;
+	if (!validate_name($table)) return "Only letters, numbers and '_' are allowed, not ".$table;
 	$stmt = prepare($con, "get_id_$table", "SELECT id FROM $table WHERE name = ?");
 	$stmt->bind_param("s", $name);
 	$stmt->execute();
@@ -52,7 +52,7 @@ function get_id_from_name($con, $table, $name) {
 }
 
 function get_name_from_id($con, $table, $id) {
-	if (validate_name($table)) return "Only letters, numbers and '_' are allowed, not ".$table;
+	if (!validate_name($table)) return "Only letters, numbers and '_' are allowed, not ".$table;
 	$stmt = prepare($con, "get_name_$table", "SELECT name FROM $table WHERE id = ?");
 	$stmt->bind_param("i", $id);
 	$stmt->execute();
@@ -65,7 +65,7 @@ function get_name_from_id($con, $table, $id) {
  * @return boolean      Whether or not it is valid
  */
 function validate_name($str) {
-	return !preg_match('/[^A-Za-z0-9_*]/', $str);
+	return preg_match('/^[A-Za-z0-9_]+$/', $str);
 }
 
 /**
