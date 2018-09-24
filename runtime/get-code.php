@@ -24,14 +24,11 @@ function get_code($con, $basedir, $files, $version = VERSION, $minifier = "cat",
     }
   }
 }
-define("JS_COMPILER", "java -jar '".__DIR__."/../third-party/closure-compiler.jar' --jscomp_off=misplacedTypeAnnotation");
-define("HTML_COMPILER", "if command -v html-minifier > /dev/null && command -v node > /dev/null
-  then
-    html-minifier --collapse-whitespace
-  else
-    echo \"Please use npm to install html-minifier by typing 'sudo npm i -g html-minifier' on the command line and make sure both html-minifier and node is available in PHP's path (\$PATH) in order to serve HTML minified\" 1>&2
-    cat
-  fi");
+define("NPX", "'".__DIR__."/../node_modules/npx/index.js'");
+define("JS_COMPILER", NPX." google-closure-compiler --jscomp_off=misplacedTypeAnnotation");
+define("JSX_INTERPRETER", NPX." babel-stdin");
+define("JSX_COMPILER", JSX_INTERPRETER." | ".JS_COMPILER);
+define("HTML_COMPILER", NPX." htmlmin --collapse-whitespace");
 function CSS_COMPILER ($args) {
   return "java -jar '".__DIR__."/../third-party/closure-stylesheets.jar' $args --allow-unrecognized-properties";
 }
@@ -44,13 +41,13 @@ function get_code_from_file_system($files, $js_modules = []) {
   }
   foreach ($files as $pattern) {
     foreach (glob($pattern) as $file) {
-      $code .= includeToVar($file);
+      $code .= include_to_var($file);
     }
   }
   return $code;
 }
 
-function includeToVar($filename) {
+function include_to_var($filename) {
   ob_start();
   include_once $filename;
   return ob_get_clean();
