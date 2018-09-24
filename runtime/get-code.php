@@ -24,7 +24,7 @@ function get_code($con, $basedir, $files, $version = VERSION, $minifier = "cat",
     }
   }
 }
-define("NPX", "'".__DIR__."/../node_modules/npx/index.js'");
+define("NPX", "cd '".__DIR__."' && '".__DIR__."/../node_modules/npx/index.js'");
 define("JS_COMPILER", NPX." google-closure-compiler --jscomp_off=misplacedTypeAnnotation");
 define("JSX_INTERPRETER", NPX." babel-stdin");
 define("JSX_COMPILER", JSX_INTERPRETER." | ".JS_COMPILER);
