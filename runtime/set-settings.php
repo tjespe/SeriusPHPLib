@@ -5,8 +5,9 @@ define('VERSION', substr(file_exists(GIT_HASH_FILE) ? file_get_contents(GIT_HASH
 define('DEVMODE', isset($_GET["dev"]));
 define('URL_APPENDAGE', DEVMODE ? round(microtime(true) * 1000) : VERSION);
 define('OMDB_KEY', __DIR__."/../../omdb-api-key.txt");
+define('LIBDIR', __DIR__.'/..');
 if (!defined('STDERR')) define('STDERR', fopen('php://stderr', 'w'));
-session_start();
+@session_start();
 
 /**
  * Set settings for PHP file

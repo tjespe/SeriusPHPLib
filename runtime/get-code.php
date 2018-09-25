@@ -12,7 +12,7 @@ function get_code_from_db($con, $id, $version = VERSION) {
 
 function get_code($con, $basedir, $files, $version = VERSION, $minifier = "cat", $js_modules = [], $use_stdin = true) {
   chdir($basedir);
-  $id = $basedir."--".implode(",", $files)."--".implode(",", $js_modules);
+  $id = realpath(null)."--".implode(",", $files)."--".implode(",", $js_modules);
 	if (DEVMODE) {
     include_once __DIR__.'/../code-management/load-js-modules.php';
 		return load_js_modules($js_modules).get_code_from_file_system($files);
