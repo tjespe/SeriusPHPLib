@@ -14,7 +14,7 @@ if (!defined('STDERR')) define('STDERR', fopen('php://stderr', 'w'));
  */
 function set_settings($content_type = "application/json") {
 	// Set headers
-	header("Content-Type: $content_type; charset=utf-8");
+	@header("Content-Type: $content_type; charset=utf-8");
 
 	if (DEVMODE) {
 		ini_set('display_errors', 1);
