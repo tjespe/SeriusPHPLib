@@ -30,8 +30,9 @@ function connect($username = "public", $password = "", $die = true) {
  * @return array Associative array with the columns as indexes and the values from row with id $id in table $table
  */
 function get_row_info($con, $table, $id, ...$columns) {
-	for ($i=1; $i < count(func_get_args()); $i++) { 
-		if (!validate_name(func_get_args()[$i])) return "Only letters, numbers and '_' are allowed";
+	$args = func_get_args();
+	for ($i=1; $i < count($args); $i++) { 
+		if (!validate_name($args[$i])) return "Only letters, numbers and '_' are allowed";
 	}
 	$stmt = prepare($con, "get_".implode("_", $columns)."_by_id_from_$table", "SELECT ".implode(", ", $columns)." FROM $table WHERE id = ?");
 	if (!$stmt) fwrite(STDERR, $con->error."\n");
